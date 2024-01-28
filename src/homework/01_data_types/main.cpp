@@ -1,20 +1,26 @@
 ﻿//write include statements
-#include <isostream>
+#include <iostream>
 
 //write namespace using statement for cout
-using std::count;
-using std::cin;
+
+int multiply_numbers(int num) {
+	return num * 2;
+}
+
 int main()
 {
 	int num = 0;
 
-	cout<<"Enter a number: ";
-	cin>>num;//value from keyboard saved into the num variable
+	std::cout<< "Enter a number: ";
+	std::cin>> num;
 
-int result = 0;
-result = multiply_numbers(num);
+int result = multiply_numbers(num);
+std::cout<<"Value is: " << result << "\n";
 
-cout<<"value is: "<<result<<"\n";
+int num1 = 4;
+
+result = multiply_numbers(num1);
+std::cout << "value is: " << result << "n";
 
 	return 0;
 }
