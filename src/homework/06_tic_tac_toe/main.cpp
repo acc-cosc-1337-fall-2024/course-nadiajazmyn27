@@ -6,28 +6,32 @@
 int main() {
     TicTacToe game;
     std::string player;
-    std::string continue_game;
 
-    do {
-        std::cout << "Enter first player (X or O): ";
-        std::cin >> player;
-        game.start_game(player);
+    std::cout << "Enter first player (X or O): ";
+    std::cin >> player;
+    game.start_game(player);
 
-        while (!game.check_board_full()) {
-            game.display_board();
-            int position;
-            std::cout << "Enter position (1-9): ";
-            std::cin >> position;
-            game.mark_board(position);
-        }
-
+    while (!game.is_game_over()) {  
         game.display_board();
-        game.clear_board();
+        int position;
+        std::cout << "Enter position (1-9): ";
+        std::cin >> position;
 
-        std::cout << "Game over. Play again? (y/n): ";
-        std::cin >> continue_game;
-    } while (continue_game == "y");
+        
+        auto pegs = game.get_pegs();  
+        while (position < 1 || position > 9 || pegs[position - 1] != " ") {
+            std::cout << "Invalid position. Enter position (1-9): ";
+            std::cin >> position;
+        }
+        
+        game.mark_board(position);
+    }
+
+    game.display_board();
+    std::cout << "Game over! " << (game.get_winner() == "C" ? "It's a tie." : "Winner is " + game.get_winner()) << std::endl;
 
     return 0;
 }
+
+
 

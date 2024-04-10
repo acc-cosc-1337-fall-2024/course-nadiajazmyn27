@@ -2,28 +2,42 @@
 #include "tic_tac_toe.h"
 #include <iostream>
 
+bool test_win(TicTacToe& game, const std::vector<int>& moves, const std::string& expected_winner) {
+    game.clear_board();
+    for (size_t i = 0; i < moves.size(); ++i) {
+        game.mark_board(moves[i]);
+        if (game.is_game_over()) break;
+    }
+    return game.get_winner() == expected_winner;
+}
+
 int main() {
     TicTacToe game;
-    game.start_game("X");
-
-   
-    game.mark_board(1); // X
-    game.mark_board(2); // O
-    game.mark_board(3); // X
-    game.mark_board(5); // O
-    game.mark_board(4); // X
-    game.mark_board(6); // O
-    game.mark_board(8); // X
-    game.mark_board(9); // O
-    game.mark_board(7); // X - board is now full with no win
 
 
-    bool is_full = game.check_board_full();
-    if (!is_full) {
-        std::cerr << "Test failed: Board should be full but check_board_full returned false." << std::endl;
+    if (!test_win(game, {1, 4, 2, 5, 3}, "X")) {
+        std::cerr << "Test failed: X should win with the first row." << std::endl;
         return 1;
     }
 
-    std::cout << "All tests passed. The board is full and there is no winner." << std::endl;
+   
+    if (!test_win(game, {1, 2, 4, 3, 7}, "X")) {
+        std::cerr << "Test failed: X should win with the first column." << std::endl;
+        return 1;
+    }
+
+    
+    if (!test_win(game, {1, 2, 5, 3, 9}, "X")) {
+        std::cerr << "Test failed: X should win with a diagonal." << std::endl;
+        return 1;
+    }
+
+    
+    if (!test_win(game, {1, 2, 3, 4, 6, 5, 8, 9, 7}, "C")) {
+        std::cerr << "Test failed: The game should be a tie." << std::endl;
+        return 1;
+    }
+
+    std::cout << "All tests passed." << std::endl;
     return 0;
 }
